@@ -5,40 +5,188 @@ import { Check, X, Stethoscope, RefreshCw } from 'lucide-react'; // Impor ikon
 
 // --- Data Konsep Anda ---
 
-// 1. Daftar semua gejala yang mungkin
+// 1. Daftar semua gejala yang mungkin (Diambil dari Jurnal - Tabel 2)
 const allSymptoms = [
-  { id: 'G1', name: 'G1: Demam tinggi' },
-  { id: 'G2', name: 'G2: Nyeri otot dan sendi' },
-  { id: 'G3', name: 'G3: Bintik merah (ruam) di kulit' },
-  { id: 'G4', name: 'G4: Sakit kepala hebat' },
-  { id: 'G5', name: 'G5: Mual dan muntah' },
-  { id: 'G6', name: 'G6: Diare atau sakit perut' },
-  // Tambahkan gejala lain di sini jika perlu
-  // { id: 'G7', name: 'G7: Pusing berputar' },
+  { id: 'G001', name: 'G001: Demam' },
+  { id: 'G002', name: 'G002: Batuk-Batuk' },
+  { id: 'G003', name: 'G003: Hidung Tersumbat/Pilek' },
+  { id: 'G004', name: 'G004: Sakit Kepala/Pusing' },
+  { id: 'G005', name: 'G005: Sakit Tenggorokan' },
+  { id: 'G006', name: 'G006: Susah Menelan' },
+  { id: 'G007', name: 'G007: Badan Lemas & Lesu' },
+  { id: 'G008', name: 'G008: Sesak Nafas' },
+  { id: 'G009', name: 'G009: Bersin-Bersin' },
+  { id: 'G010', name: 'G010: Frekuensi Nafas Cepat' },
+  { id: 'G011', name: 'G011: Suara Nafas Kasar' },
+  { id: 'G012', name: 'G012: Nafsu Makan Berkurang' },
+  { id: 'G013', name: 'G013: Suara Serak' },
+  { id: 'G014', name: 'G014: Gelisah' },
+  { id: 'G015', name: 'G015: Susah Tidur' },
+  { id: 'G016', name: 'G016: Nyeri Di Dada' },
+  { id: 'G017', name: 'G017: Berkurangnya Kemampuan Indra Penciuman' },
+  { id: 'G018', name: 'G018: Wajah Terasa Nyeri Atau Tertekan' },
+  { id: 'G019', name: 'G019: Bau Mulut' },
+  { id: 'G020', name: 'G020: Sakit Gigi' },
+  { id: 'G021', name: 'G021: Nyeri Sendi Atau Nyeri Otot' },
+  { id: 'G022', name: 'G022: Berkeringat Dan Menggigil' },
+  { id: 'G023', name: 'G023: Batuk Dengan Dahak Kental (Hijau/Kuning/Darah)' },
+  { id: 'G024', name: 'G024: Diare' },
+  { id: 'G025', name: 'G025: Mual Atau Muntah' },
+  { id: 'G026', name: 'G026: Nyeri Bahu Dan Punggung' },
+  { id: 'G027', name: 'G027: Hidung Berair' },
+  { id: 'G028', name: 'G028: Nyeri Telinga' },
+  { id: 'G029', name: 'G029: Mata Berair' },
+  { id: 'G030', name: 'G030: Dehidrasi' },
 ];
 
-// 2. Aturan diagnosis penyakit (Rule Base)
-// Ini adalah "otak" dari sistem pakar Anda, sesuai contoh Anda
+// 2. Aturan diagnosis penyakit (Rule Base) (Diambil dari Jurnal - Tabel 1 & 3)
 const diseaseRules = [
+  // R1 -> P001 (Bronkitis)
   {
-    name: 'Demam Berdarah',
-    symptoms: ['G1', 'G2', 'G3'],
+    name: 'Bronkitis (P001)',
+    symptoms: ['G001', 'G002', 'G003', 'G007', 'G008', 'G011', 'G023', 'G027'],
     description:
-      'Penyakit infeksi virus yang ditularkan oleh nyamuk Aedes aegypti. Segera cari pertolongan medis.',
+      'Berdasarkan aturan R1 dari jurnal. Segera konsultasikan dengan dokter untuk diagnosis profesional.',
   },
+  // R2 -> P002 (Sinusitis)
   {
-    name: 'Tipes (Demam Tifoid)',
-    symptoms: ['G4', 'G5', 'G6'],
+    name: 'Sinusitis (P002)',
+    symptoms: [
+      'G001',
+      'G002',
+      'G003',
+      'G004',
+      'G008',
+      'G009',
+      'G010',
+      'G013',
+      'G015',
+      'G017',
+      'G018',
+      'G019',
+      'G020',
+    ],
     description:
-      'Penyakit yang disebabkan oleh infeksi bakteri Salmonella typhi, biasanya menyebar melalui makanan atau air yang terkontaminasi.',
+      'Berdasarkan aturan R2 dari jurnal. Segera konsultasikan dengan dokter untuk diagnosis profesional.',
   },
+  // R3 -> P003 (Bronkiolitis)
   {
-    name: 'Vertigo (Contoh Aturan)',
-    symptoms: ['G1', 'G3', 'G5'],
+    name: 'Bronkiolitis (P003)',
+    symptoms: [
+      'G001',
+      'G002',
+      'G007',
+      'G008',
+      'G010',
+      'G011',
+      'G012',
+      'G015',
+      'G030',
+    ],
     description:
-      'Kombinasi gejala ini (berdasarkan aturan Anda) mungkin mengindikasikan kondisi lain. Ini adalah contoh.',
+      'Berdasarkan aturan R3 dari jurnal. Segera konsultasikan dengan dokter untuk diagnosis profesional.',
   },
-  // Tambahkan aturan penyakit lain di sini
+  // R4 -> P004 (Pneumonia)
+  {
+    name: 'Pneumonia (P004)',
+    symptoms: [
+      'G001',
+      'G002',
+      'G004',
+      'G008',
+      'G010',
+      'G012',
+      'G016',
+      'G023',
+      'G024',
+      'G025',
+    ],
+    description:
+      'Berdasarkan aturan R4 dari jurnal. Segera konsultasikan dengan dokter untuk diagnosis profesional.',
+  },
+  // R5 -> P005 (Faringitis)
+  {
+    name: 'Faringitis (P005)',
+    symptoms: [
+      'G001',
+      'G002',
+      'G004',
+      'G005',
+      'G006',
+      'G007',
+      'G009',
+      'G012',
+      'G013',
+      'G025',
+    ],
+    description:
+      'Berdasarkan aturan R5 dari jurnal. Segera konsultasikan dengan dokter untuk diagnosis profesional.',
+  },
+  // R6 -> P006 (Epiglotitis)
+  {
+    name: 'Epiglotitis (P006)',
+    symptoms: ['G001', 'G004', 'G005', 'G006', 'G011', 'G013', 'G014'],
+    description:
+      'Berdasarkan aturan R6 dari jurnal. Segera konsultasikan dengan dokter untuk diagnosis profesional.',
+  },
+  // R7 -> P007 (Pleuritis)
+  {
+    name: 'Pleuritis (P007)',
+    symptoms: [
+      'G001',
+      'G002',
+      'G008',
+      'G010',
+      'G016',
+      'G021',
+      'G022',
+      'G023',
+      'G026',
+    ],
+    description:
+      'Berdasarkan aturan R7 dari jurnal. Segera konsultasikan dengan dokter untuk diagnosis profesional.',
+  },
+  // R8 -> P008 (Common Cold)
+  {
+    name: 'Common Cold (P008)',
+    symptoms: [
+      'G001',
+      'G002',
+      'G003',
+      'G004',
+      'G009',
+      'G013',
+      'G017',
+      'G027',
+      'G029',
+    ],
+    description:
+      'Berdasarkan aturan R8 dari jurnal. Segera konsultasikan dengan dokter untuk diagnosis profesional.',
+  },
+  // R9 -> P009 (ILI / Influenza Like Illness)
+  {
+    name: 'ILI (Influenza Like Illness) (P009)',
+    symptoms: [
+      'G001',
+      'G002',
+      'G003',
+      'G004',
+      'G005',
+      'G006',
+      'G007',
+      'G008',
+      'G009',
+      'G010',
+      'G011',
+      'G012',
+      'G013',
+      'G017',
+      'G022',
+      'G029',
+    ],
+    description:
+      'Berdasarkan aturan R9 dari jurnal. Segera konsultasikan dengan dokter untuk diagnosis profesional.',
+  },
 ];
 
 // --- Komponen Utama Aplikasi ---
